@@ -1,0 +1,16 @@
+version: '2'
+services:
+  zookeeper:
+    image: wurstmeister/zookeeper
+    ports:
+      - "2181:2181"
+  kafka:
+    build: .
+    ports:
+      - "9092:9092"
+    environment:
+      KAFKA_ADVERTISED_HOST_NAME: localhost
+      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+      KAFA_CREATE_TOPICS: "create_user:1:1, get_user:1:1, change_user_pwd:1:1, update_user_data:1:1, delete_user:1:1, delete_user_by_email:1:1"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
